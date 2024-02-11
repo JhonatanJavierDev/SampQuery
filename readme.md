@@ -42,7 +42,7 @@ $this->server['online'] =  $this->verifyServer();
 ## How to use it
 
 **Install**
-```
+```php
 composer require jhonatanjavierdev/sampquery
 
 ```
