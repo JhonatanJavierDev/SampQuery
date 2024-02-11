@@ -1,0 +1,20 @@
+{
+    "name": "jhonatanjavierdev/sampquery",
+    "description": "Library based on the samp query api script, provides better efficiency and better optimization for the use of the sa-mp api",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jhonatan Corella",
+            "email": "corella.jhonatan@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "jhonatanjavierdev\\SampQuery\\": "src/"
+        }
+    }
+}
