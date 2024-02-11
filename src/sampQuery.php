@@ -6,8 +6,9 @@ class SampQuery
 {
     private $socket;
     private $server;
+    private $port;
 
-    public function __construct($server, $port = 7777)
+    public function __construct($server, $port)
     {
         $this->server = [$server, $port];
         $this->socket = $this->initializeSocket();
@@ -115,13 +116,11 @@ class SampQuery
 
     private function sendInitialPacket()
     {
-        $packet = 'SAMP';
-        $packet .= implode('', array_map('chr', array_merge(explode('.', $this->server[0]), [$this->server[1] & 0xFF, $this->server[1] >> 8 & 0xFF])));
-        $packet .= 'p4150';
-
+        $ipParts = array_map('intval', explode('.', $this->server[0]));
+        $packet = 'SAMP' . implode('', array_map('chr', array_merge($ipParts, [$this->server[1] & 0xFF, $this->server[1] >> 8 & 0xFF]))) . 'p4150';
         fwrite($this->socket, $packet);
     }
-
+    
     private function verifyServer()
     {
         if ($this->readSocket(10) && $this->readSocket(5) == 'p4150') {
@@ -147,7 +146,7 @@ class SampQuery
 
     private function readString($length = 4)
     {
-        return (string) fread($this->socket, ord($this->readSocket($length)));
+        return (string) fread($this->socket, (int) ord($this->readSocket($length)));
     }
 
     private function toInteger($data)
